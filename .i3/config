@@ -419,3 +419,4 @@ mode "$mode_gaps_outer" {
 }
 
 exec wal -R
+bindsym $mod+Ctrl+w exec wal -i ~/wallpapers
