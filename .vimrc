@@ -18,9 +18,6 @@ Plug 'powerline/fonts'
 
 call plug#end()
 
-" Set Colorscheme and status bar "
-colorscheme wombat
-
 let g:airline#extensions#tabline#enabled = 1 " Shows buffer status in status bar
 let g:airline_theme='simple'
 let g:airline_powerline_fonts = 1
