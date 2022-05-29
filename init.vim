@@ -28,12 +28,14 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'fatih/vim-go', { 'do': 'GoInstallBinaries' }
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'SirVer/ultisnips'
+Plug 'tpope/vim-commentary'
 
 Plug 'joshdick/onedark.vim'
 
 " CoC language extensions
 Plug 'neoclide/coc-json'
 Plug 'josa42/coc-go'
+
 
 call plug#end()
 
