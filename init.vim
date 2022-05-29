@@ -6,6 +6,7 @@ filetype indent on
 filetype plugin on
 
 set encoding=UTF-8
+set updatetime=100
 
 syntax on
 set nocompatible
@@ -20,12 +21,23 @@ endif
 
 call plug#begin()
 Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'ryanoasis/vim-devicons'
 Plug 'fatih/vim-go', { 'do': 'GoInstallBinaries' }
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'SirVer/ultisnips'
+
+Plug 'joshdick/onedark.vim'
+
+" CoC language extensions
+Plug 'neoclide/coc-json'
+Plug 'josa42/coc-go'
+
 call plug#end()
+
+colorscheme onedark
 
 " shortcuts to go to vimrc
 nnoremap <leader>ss :source $MYVIMRC<CR>
@@ -52,7 +64,10 @@ nnoremap <leader>bd :bdelete <CR>
 
 " netrw
 nnoremap <leader>t :20Lexplore<CR>
-
+let g:netrw_banner=0
+let g:netrw_browse_split=4
+let g:netrw_fastbrowse=0
+let g:netrw_liststyle=3
 
 " Highlight the symbol and its references when holding the cursor.
 autocmd CursorHold * silent call CocActionAsync('highlight')
