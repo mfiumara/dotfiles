@@ -1,6 +1,9 @@
 nnoremap <SPACE> <Nop>
 let mapleader = " "
 
+set ttimeout
+set ttimeoutlen=10
+
 filetype on
 filetype indent on
 filetype plugin on
@@ -36,6 +39,8 @@ Plug 'joshdick/onedark.vim'
 Plug 'neoclide/coc-json'
 Plug 'josa42/coc-go'
 
+" Linter
+Plug 'sbdchd/neoformat'
 
 call plug#end()
 
@@ -63,6 +68,10 @@ nnoremap <leader>tn :tabnew <CR>
 nnoremap <leader>bn :bnext <CR>
 nnoremap <leader>bp :bprevious <CR>
 nnoremap <leader>bd :bdelete <CR>
+nnoremap <leader>bb :buffers <CR>
+
+" Terminal mappings
+:tnoremap <Esc> <C-\><C-n>
 
 " netrw
 nnoremap <leader>t :20Lexplore<CR>
