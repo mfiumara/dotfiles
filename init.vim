@@ -11,8 +11,8 @@ filetype plugin on
 set encoding=UTF-8
 set updatetime=100
 
-syntax on
 set nocompatible
+" syntax on
 set number relativenumber
 set ruler
 
@@ -27,12 +27,14 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'ryanoasis/vim-devicons'
+" Plug 'ryanoasis/vim-devicons'
+Plug 'kyazdani42/nvim-web-devicons' " Recommended (for coloured icons)
 Plug 'fatih/vim-go', { 'do': 'GoInstallBinaries' }
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'SirVer/ultisnips'
 Plug 'tpope/vim-commentary'
-
+Plug 'preservim/nerdtree' |
+            \ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'joshdick/onedark.vim'
 
 " CoC language extensions
@@ -41,6 +43,8 @@ Plug 'josa42/coc-go'
 
 " Linter
 Plug 'sbdchd/neoformat'
+
+Plug 'akinsho/bufferline.nvim'
 
 call plug#end()
 
@@ -73,12 +77,8 @@ nnoremap <leader>bb :buffers <CR>
 " Terminal mappings
 :tnoremap <Esc> <C-\><C-n>
 
-" netrw
-nnoremap <leader>t :20Lexplore<CR>
-let g:netrw_banner=0
-let g:netrw_browse_split=4
-let g:netrw_fastbrowse=0
-let g:netrw_liststyle=3
+" NERDtree
+nnoremap <leader>nt :NERDTreeToggleVCS<CR>
 
 " Highlight the symbol and its references when holding the cursor.
 autocmd CursorHold * silent call CocActionAsync('highlight')
