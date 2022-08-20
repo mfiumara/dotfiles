@@ -23,14 +23,22 @@ if empty(glob(data_dir . '/autoload/plug.vim'))
 endif
 
 call plug#begin()
+" Status Line
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
+
+" Search
 Plug 'ctrlpvim/ctrlp.vim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
 " Plug 'ryanoasis/vim-devicons'
 Plug 'kyazdani42/nvim-web-devicons' " Recommended (for coloured icons)
-Plug 'fatih/vim-go', { 'do': 'GoInstallBinaries' }
+
+" Language support
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'fatih/vim-go', { 'do': 'GoInstallBinaries' }
 Plug 'SirVer/ultisnips'
 Plug 'tpope/vim-commentary'
 Plug 'preservim/nerdtree' |
@@ -40,6 +48,7 @@ Plug 'joshdick/onedark.vim'
 " CoC language extensions
 Plug 'neoclide/coc-json'
 Plug 'josa42/coc-go'
+" CocInstall coc-go
 
 " Linter
 Plug 'sbdchd/neoformat'
@@ -77,8 +86,14 @@ nnoremap <leader>bb :buffers <CR>
 " Terminal mappings
 :tnoremap <Esc> <C-\><C-n>
 
+" Copy to clipboard
+" "+y
 " NERDtree
 nnoremap <leader>nt :NERDTreeToggleVCS<CR>
+
+" ctrlP mappings
+nnoremap <leader>ff :CtrlPMixed<CR>
+let g:ctrlp_working_path_mode = 'ra'
 
 " Highlight the symbol and its references when holding the cursor.
 autocmd CursorHold * silent call CocActionAsync('highlight')
