@@ -11,6 +11,7 @@ filetype plugin on
 set encoding=UTF-8
 set updatetime=100
 
+set mouse=a
 set nocompatible
 " syntax on
 set number relativenumber
@@ -30,8 +31,10 @@ Plug 'airblade/vim-gitgutter'
 
 " Search
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
+"Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+"Plug 'junegunn/fzf.vim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
 
 " Plug 'ryanoasis/vim-devicons'
 Plug 'kyazdani42/nvim-web-devicons' " Recommended (for coloured icons)
@@ -92,8 +95,14 @@ nnoremap <leader>bb :buffers <CR>
 nnoremap <leader>nt :NERDTreeToggleVCS<CR>
 
 " ctrlP mappings
-nnoremap <leader>ff :CtrlPMixed<CR>
-let g:ctrlp_working_path_mode = 'ra'
+" Find files using Telescope command-line sugar.
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+
+" nnoremap <leader>ff :CtrlPMixed<CR>
+" let g:ctrlp_working_path_mode = 'ra'
 
 " Highlight the symbol and its references when holding the cursor.
 autocmd CursorHold * silent call CocActionAsync('highlight')
