@@ -27,7 +27,12 @@ call plug#begin()
 " Status Line
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'airblade/vim-gitgutter'
+
+" Git plugins
+" Handled by VGit
+"Plug 'airblade/vim-gitgutter'
+"Plug 'tanvirtin/vgit.nvim'
+Plug 'TimUntersberger/neogit'
 
 " Search
 "Plug 'ctrlpvim/ctrlp.vim'
@@ -42,7 +47,7 @@ Plug 'kyazdani42/nvim-web-devicons' " Recommended (for coloured icons)
 " Language support
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'fatih/vim-go', { 'do': 'GoInstallBinaries' }
-Plug 'SirVer/ultisnips'
+" Plug 'SirVer/ultisnips'
 Plug 'tpope/vim-commentary'
 Plug 'preservim/nerdtree' |
             \ Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -58,9 +63,17 @@ Plug 'sbdchd/neoformat'
 
 Plug 'akinsho/bufferline.nvim'
 
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 call plug#end()
-" TODO: Install this nice plug-in for git
-" https://github.com/tanvirtin/vgit.nvim#highlighted-features
+
+lua << EOF
+require'nvim-treesitter.configs'.setup {
+  -- A list of parser names, or "all"
+  ensure_installed = { "c", "lua", "rust" },
+}
+local neogit = require('neogit')
+neogit.setup {}
+EOF
 
 colorscheme onedark
 
@@ -73,6 +86,8 @@ nnoremap <leader>wj :wincmd j<CR>
 nnoremap <leader>wk :wincmd k<CR>
 nnoremap <leader>wh :wincmd h<CR>
 nnoremap <leader>wl :wincmd l<CR>
+nnoremap <leader>+ :res +5<CR>
+nnoremap <leader>_ :res -5<CR>
 
 nnoremap <leader>sv :vsplit <CR>
 nnoremap <leader>sh :split <CR>
@@ -96,12 +111,16 @@ nnoremap <leader>bb :buffers <CR>
 " NERDtree
 nnoremap <leader>nt :NERDTreeToggleVCS<CR>
 
-" ctrlP mappings
+" Telescope mappings
 " Find files using Telescope command-line sugar.
-nnoremap <leader>ff <cmd>Telescope find_files<cr>
-nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <C-p> <cmd>Telescope find_files<cr>
+nnoremap <leader>ff <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+nnoremap <leader>fs <cmd>Telescope grep_string<cr>
+
+" Git mappings
+nnoremap <leader>gs <cmd>Neogit<cr>
 
 " Coc Default config
 " Some servers have issues with backup files, see #649.
@@ -121,16 +140,16 @@ set signcolumn=yes
 " NOTE: There's always complete item selected by default, you may want to enable
 " no select by `"suggest.noselect": true` in your configuration file.
 " other plugin before putting this into your config.
-" inoremap <silent><expr> <TAB>
-"       \ coc#pum#visible() ? coc#pum#next(1):
-"       \ CheckBackspace() ? "\<Tab>" :
-"       \ coc#refresh()
-" inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+inoremap <silent><expr> <TAB>
+      \ coc#pum#visible() ? coc#pum#next(1):
+      \ CheckBackspace() ? "\<Tab>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
 " Make <CR> to accept selected completion item or notify coc.nvim to format
 " <C-g>u breaks current undo, please make your own choice.
-" inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
-"                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 function! CheckBackspace() abort
   let col = col('.') - 1
@@ -170,6 +189,7 @@ endfunction
 
 " Highlight the symbol and its references when holding the cursor.
 autocmd CursorHold * silent call CocActionAsync('highlight')
+autocmd CursorHold * silent call ShowDocumentation()
 
 " Symbol renaming.
 " nmap <leader>rn <Plug>(coc-rename)
