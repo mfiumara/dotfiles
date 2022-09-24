@@ -27,11 +27,12 @@ call plug#begin()
 " Status Line
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'akinsho/toggleterm.nvim', {'tag' : 'v2.*'}
 
 " Git plugins
 " Handled by VGit
-"Plug 'airblade/vim-gitgutter'
-"Plug 'tanvirtin/vgit.nvim'
+Plug 'airblade/vim-gitgutter'
+" Plug 'tanvirtin/vgit.nvim'
 Plug 'TimUntersberger/neogit'
 
 " Search
@@ -57,6 +58,7 @@ Plug 'joshdick/onedark.vim'
 Plug 'neoclide/coc-json'
 Plug 'josa42/coc-go'
 " CocInstall coc-go
+" CocInstall coc-markdownlint
 
 " Linter
 Plug 'sbdchd/neoformat'
@@ -73,6 +75,7 @@ require'nvim-treesitter.configs'.setup {
 }
 local neogit = require('neogit')
 neogit.setup {}
+require("toggleterm").setup{}
 EOF
 
 colorscheme onedark
@@ -88,6 +91,7 @@ nnoremap <leader>wh :wincmd h<CR>
 nnoremap <leader>wl :wincmd l<CR>
 nnoremap <leader>+ :res +5<CR>
 nnoremap <leader>_ :res -5<CR>
+nnoremap <leader>wo :on<CR>
 
 nnoremap <leader>sv :vsplit <CR>
 nnoremap <leader>sh :split <CR>
@@ -96,6 +100,8 @@ nnoremap <leader>sh :split <CR>
 nnoremap <leader>tl :tabnext <CR>
 nnoremap <leader>th :tabprevious <CR>
 nnoremap <leader>tn :tabnew <CR>
+nnoremap <leader>td :tabclose <CR>
+nnoremap <leader>tt :tabedit %<CR>
 
 " spacemacs like buffer management
 nnoremap <leader>bn :bnext <CR>
@@ -189,7 +195,7 @@ endfunction
 
 " Highlight the symbol and its references when holding the cursor.
 autocmd CursorHold * silent call CocActionAsync('highlight')
-autocmd CursorHold * silent call ShowDocumentation()
+" autocmd CursorHold * silent call ShowDocumentation()
 
 " Symbol renaming.
 " nmap <leader>rn <Plug>(coc-rename)
