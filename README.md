@@ -6,6 +6,7 @@ This assumes the following dependencies are installed:
 * node
 * ripgrep
 * tmux
+* code-minimap
 
 ## Installation
 
@@ -15,3 +16,9 @@ Run:
 ./bootstrap.sh
 ```
 
+## To-do
+
+[] clang-formatter on save
+[] convert init.vim to lua
+[] kanagawa theme
+[] telescope like temporary terminals

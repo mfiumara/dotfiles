@@ -38,6 +38,9 @@ Plug 'nvim-lualine/lualine.nvim'
 "             \ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'kyazdani42/nvim-tree.lua'
 
+" Mini-map
+Plug 'wfxr/minimap.vim', {'do': ':!cargo install --locked code-minimap'}
+
 " Themes
 Plug 'joshdick/onedark.vim'
 " Plug 'rebelot/kanagawa.nvim'
@@ -58,6 +61,7 @@ Plug 'akinsho/toggleterm.nvim', {'tag' : 'v2.*'}
 " Git plugins
 " Handled by VGit
 " Plug 'airblade/vim-gitgutter'
+Plug 'lewis6991/gitsigns.nvim'
 " Plug 'tanvirtin/vgit.nvim'
 " Plug 'TimUntersberger/neogit'
 
@@ -101,6 +105,7 @@ vim.g.loaded_netrwPlugin = 1
 -- empty setup using defaults
 require('nvim-tree').setup()
 require('lualine').setup()
+require('gitsigns').setup()
 
 local nvim_tree_events = require('nvim-tree.events')
 local bufferline_state = require('bufferline.state')
@@ -122,6 +127,13 @@ nvim_tree_events.subscribe('TreeClose', function()
 end)
 EOF
 
+let g:minimap_width = 5
+let g:minimap_auto_start = 1
+let g:minimap_auto_start_win_enter = 1
+let g:minimap_git_colors = 1
+let g:minimap_highlight_range = 1
+let g:minimap_highlight_search = 1
+
 " NERDtree
 nnoremap <leader>nt :NvimTreeFindFileToggle<CR>
 
@@ -142,6 +154,7 @@ nnoremap <leader>wl :wincmd l<CR>
 nnoremap <leader>+ :res +5<CR>
 nnoremap <leader>_ :res -5<CR>
 nnoremap <leader>wo :on<CR>
+nnoremap <leader>wd :q<CR>
 
 nnoremap <leader>sv :vsplit <CR>
 nnoremap <leader>sh :split <CR>
