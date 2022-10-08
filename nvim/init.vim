@@ -62,6 +62,7 @@ Plug 'akinsho/toggleterm.nvim', {'tag' : 'v2.*'}
 " Handled by VGit
 " Plug 'airblade/vim-gitgutter'
 Plug 'lewis6991/gitsigns.nvim'
+Plug 'tpope/vim-fugitive'
 " Plug 'tanvirtin/vgit.nvim'
 " Plug 'TimUntersberger/neogit'
 
@@ -86,13 +87,10 @@ Plug 'tpope/vim-commentary'
 
 Plug 'fatih/vim-go', { 'do': 'GoInstallBinaries' }
 " Linter
-" Plug 'sbdchd/neoformat'
+Plug 'sbdchd/neoformat'
 
 call plug#end()
-" require'nvim-treesitter.configs'.setup {
-"   -- A list of parser names, or "all"
-"   ensure_installed = { "c", "lua", "rust" },
-" }
+
 " local neogit = require('neogit')
 " neogit.setup {}
 " require("toggleterm").setup{}
@@ -103,9 +101,25 @@ vim.g.loaded = 1
 vim.g.loaded_netrwPlugin = 1
 
 -- empty setup using defaults
+require('nvim-treesitter.configs').setup {
+   ensure_installed = { "c", "lua", "rust" },
+}
 require('nvim-tree').setup()
 require('lualine').setup()
-require('gitsigns').setup()
+require('gitsigns').setup {
+  signs = {
+    add = {hl = 'GitSignsAdd', text = '│', numhl='GitSignsAddNr', linehl='GitSignsAddLn'},
+    change = {hl = 'GitSignsChange', text = '│', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
+    delete = {hl = 'GitSignsDelete', text = '|', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
+    topdelete = {hl = 'GitSignsDelete', text = '|', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
+    changedelete = {hl = 'GitSignsChange', text = '|', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'}
+  }
+}
+require('telescope').setup{
+  defaults = {
+    layout_strategy = 'vertical',
+  },
+}
 
 local nvim_tree_events = require('nvim-tree.events')
 local bufferline_state = require('bufferline.state')
@@ -128,11 +142,22 @@ end)
 EOF
 
 let g:minimap_width = 5
-let g:minimap_auto_start = 1
+" let g:minimap_auto_start = 1
 let g:minimap_auto_start_win_enter = 1
 let g:minimap_git_colors = 1
 let g:minimap_highlight_range = 1
 let g:minimap_highlight_search = 1
+
+" Auto-format on save
+augroup fmt
+  autocmd!
+  autocmd BufWritePre * undojoin | Neoformat
+augroup END
+let g:neoformat_clangformat = {
+  \ 'exe': 'clang-format',
+  \ 'args': ['-style=file'],
+  \ 'stdin': 1,
+  \ }
 
 " NERDtree
 nnoremap <leader>nt :NvimTreeFindFileToggle<CR>
@@ -171,6 +196,9 @@ nnoremap <leader>tn :tabnew <CR>
 nnoremap <leader>td :tabclose <CR>
 nnoremap <leader>tt :tabedit %<CR>
 
+" git mappings
+nnoremap <leader>gd :Gitsigns diffthis<CR>
+
 " Terminal mappings
 :tnoremap <Esc> <C-\><C-n>
 
@@ -183,6 +211,8 @@ nnoremap <leader>ff <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 nnoremap <leader>fs <cmd>Telescope grep_string<cr>
+
+nnoremap <leader>mm :MinimapToggle<cr>
 
 " Git mappings
 nnoremap <leader>gs <cmd>Neogit<cr>
