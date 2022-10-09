@@ -82,7 +82,7 @@ Plug 'fannheyward/coc-rust-analyzer'
 " CocInstall coc-go
 " CocInstall coc-markdownlint
 
-" Plug 'SirVer/ultisnips'
+Plug 'SirVer/ultisnips', { 'do': ':!pip3 install neovim' }
 Plug 'tpope/vim-commentary'
 
 Plug 'fatih/vim-go', { 'do': 'GoInstallBinaries' }
@@ -102,18 +102,40 @@ vim.g.loaded_netrwPlugin = 1
 
 -- empty setup using defaults
 require('nvim-treesitter.configs').setup {
-   ensure_installed = { "c", "lua", "rust" },
+	ensure_installed = { "c", "lua", "rust" },
 }
-require('nvim-tree').setup()
+ 
+require('nvim-tree').setup {
+ 	renderer = { highlight_git = true, icons = { show = { folder = false }, git_placement = "signcolumn",	
+		glyphs = {
+			git = {	unstaged = "M",	staged = "S", unmerged = "", renamed = "R", untracked = "*", deleted = "D", ignored = "i" },
+		},
+		},
+	},
+	view = { 
+		float = {
+			enable = true, 
+			open_win_config = {
+				relative = "editor",
+				border = "rounded",
+				width = 30,
+				height = 30,
+				row = 1,
+				col = 3,
+			},
+		},
+	},
+}
+
 require('lualine').setup()
 require('gitsigns').setup {
-  signs = {
-    add = {hl = 'GitSignsAdd', text = '│', numhl='GitSignsAddNr', linehl='GitSignsAddLn'},
-    change = {hl = 'GitSignsChange', text = '│', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
-    delete = {hl = 'GitSignsDelete', text = '|', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
-    topdelete = {hl = 'GitSignsDelete', text = '|', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
-    changedelete = {hl = 'GitSignsChange', text = '|', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'}
-  }
+	signs = {
+		add = {hl = 'GitSignsAdd', text = '│', numhl='GitSignsAddNr', linehl='GitSignsAddLn'},
+		change = {hl = 'GitSignsChange', text = '│', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
+		delete = {hl = 'GitSignsDelete', text = '|', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
+		topdelete = {hl = 'GitSignsDelete', text = '|', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
+		changedelete = {hl = 'GitSignsChange', text = '|', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'}
+	}
 }
 require('telescope').setup{
   defaults = {
@@ -124,21 +146,21 @@ require('telescope').setup{
 local nvim_tree_events = require('nvim-tree.events')
 local bufferline_state = require('bufferline.state')
 
-local function get_tree_size()
-  return require'nvim-tree.view'.View.width
-end
-
-nvim_tree_events.subscribe('TreeOpen', function()
-  bufferline_state.set_offset(get_tree_size())
-end)
-
-nvim_tree_events.subscribe('Resize', function()
-  bufferline_state.set_offset(get_tree_size())
-end)
-
-nvim_tree_events.subscribe('TreeClose', function()
-  bufferline_state.set_offset(0)
-end)
+-- local function get_tree_size()
+--   return require'nvim-tree.view'.View.width
+-- end
+-- 
+-- nvim_tree_events.subscribe('TreeOpen', function()
+--   bufferline_state.set_offset(get_tree_size())
+-- end)
+-- 
+-- nvim_tree_events.subscribe('Resize', function()
+--   bufferline_state.set_offset(get_tree_size())
+-- end)
+-- 
+-- nvim_tree_events.subscribe('TreeClose', function()
+--   bufferline_state.set_offset(0)
+-- end)
 EOF
 
 let g:minimap_width = 5
