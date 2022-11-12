@@ -49,11 +49,9 @@ Plug 'joshdick/onedark.vim'
 " Plug 'ryanoasis/vim-devicons'
 Plug 'kyazdani42/nvim-web-devicons' " Recommended (for coloured icons)
 
-" Nice tabs
-Plug 'romgrk/barbar.nvim'
-
 " Syntax highlighting
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'folke/todo-comments.nvim'
 
 " Terminal stuff
 Plug 'akinsho/toggleterm.nvim', {'tag' : 'v2.*'}
@@ -93,78 +91,6 @@ call plug#end()
 
 let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/UltiSnips']
 
-" local neogit = require('neogit')
-" neogit.setup {}
-" require("toggleterm").setup{}
-
-lua << EOF
--- disable netrw at the very start of your init.lua (strongly advised)
-vim.g.loaded = 1
-vim.g.loaded_netrwPlugin = 1
-
--- empty setup using defaults
-require('nvim-treesitter.configs').setup {
-	ensure_installed = { "c", "lua", "rust" },
-}
- 
-require('nvim-tree').setup {
- 	renderer = { highlight_git = true, icons = { show = { folder = false }, git_placement = "signcolumn",	
-		glyphs = {
-			git = {	unstaged = "M",	staged = "S", unmerged = "", renamed = "R", untracked = "*", deleted = "D", ignored = "i" },
-		},
-		},
-	},
-	view = { 
-		float = {
-			enable = true, 
-			open_win_config = {
-				relative = "editor",
-				border = "rounded",
-				width = 30,
-				height = 30,
-				row = 1,
-				col = 3,
-			},
-		},
-	},
-}
-
-require('lualine').setup()
-require('gitsigns').setup {
-	signs = {
-		add = {hl = 'GitSignsAdd', text = '│', numhl='GitSignsAddNr', linehl='GitSignsAddLn'},
-		change = {hl = 'GitSignsChange', text = '│', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
-		delete = {hl = 'GitSignsDelete', text = '|', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
-		topdelete = {hl = 'GitSignsDelete', text = '|', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
-		changedelete = {hl = 'GitSignsChange', text = '|', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'}
-	}
-}
-require('telescope').setup{
-  defaults = {
-    layout_strategy = 'vertical',
-  },
-}
-
-local nvim_tree_events = require('nvim-tree.events')
-local bufferline_state = require('bufferline.state')
-
--- local function get_tree_size()
---   return require'nvim-tree.view'.View.width
--- end
--- 
--- nvim_tree_events.subscribe('TreeOpen', function()
---   bufferline_state.set_offset(get_tree_size())
--- end)
--- 
--- nvim_tree_events.subscribe('Resize', function()
---   bufferline_state.set_offset(get_tree_size())
--- end)
--- 
--- nvim_tree_events.subscribe('TreeClose', function()
---   bufferline_state.set_offset(0)
--- end)
-EOF
-
 let g:minimap_width = 5
 " let g:minimap_auto_start = 1
 let g:minimap_auto_start_win_enter = 1
@@ -200,6 +126,7 @@ nnoremap <leader>wj :wincmd j<CR>
 nnoremap <leader>wk :wincmd k<CR>
 nnoremap <leader>wh :wincmd h<CR>
 nnoremap <leader>wl :wincmd l<CR>
+nnoremap <leader>wr :wincmd r<CR>
 nnoremap <leader>+ :res +5<CR>
 nnoremap <leader>_ :res -5<CR>
 nnoremap <leader>wo :on<CR>
@@ -209,16 +136,19 @@ nnoremap <leader>sv :vsplit <CR>
 nnoremap <leader>sh :split <CR>
 
 " barbar buffer management
-nnoremap <leader>bn :BufferNext <CR>
-nnoremap <leader>bp :BufferPrevious <CR>
-nnoremap <leader>bd :BufferClose <CR>
-nnoremap <leader>bb :BufferPick <CR>
+nnoremap <leader>bn :bnext <CR>
+nnoremap <leader>bp :bprevious <CR>
+nnoremap <leader>bd :bdelete <CR>
+nnoremap <leader>bb <cmd>Telescope buffers<cr>
 
 nnoremap <leader>tl :tabnext <CR>
 nnoremap <leader>th :tabprevious <CR>
 nnoremap <leader>tn :tabnew <CR>
 nnoremap <leader>td :tabclose <CR>
 nnoremap <leader>tt :tabedit %<CR>
+
+" Todo's
+nnoremap <leader>? :TodoTelescope <CR>
 
 " git mappings
 nnoremap <leader>gd :Gitsigns diffthis<CR>
@@ -299,11 +229,13 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+nmap <silent> ge <cmd>CocCommand rust-analyzer.explainError<CR>
 
 " CTRL + O and CTRL + I to jump back and forth in nav
 
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call ShowDocumentation()<CR>
+
 
 function! ShowDocumentation()
   if CocAction('hasProvider', 'hover')
@@ -403,73 +335,59 @@ set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 " Resume latest coc list.
 " nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
+lua << EOF
+-- disable netrw at the very start of your init.lua (strongly advised)
+vim.g.loaded = 1
+vim.g.loaded_netrwPlugin = 1
 
+-- empty setup using defaults
+require('nvim-treesitter.configs').setup {
+	ensure_installed = { "c", "lua", "rust" },
+}
+ 
+require("toggleterm").setup{}
 
-" NOTE: If barbar's option dict isn't created yet, create it
-let bufferline = get(g:, 'bufferline', {})
+require('nvim-tree').setup {
+ 	renderer = { highlight_git = true, icons = { show = { folder = false }, git_placement = "signcolumn",	
+		glyphs = {
+			git = {	unstaged = "M",	staged = "S", unmerged = "", renamed = "R", untracked = "*", deleted = "D", ignored = "i" },
+		},
+		},
+	},
+	view = { 
+		float = {
+			enable = true, 
+			open_win_config = {
+				relative = "editor",
+				border = "rounded",
+				width = 50,
+				height = 50,
+				row = 1,
+				col = 3,
+			},
+		},
+	},
+}
 
-" Enable/disable animations
-let bufferline.animation = v:true
+require('lualine').setup()
+require('gitsigns').setup {
+	signs = {
+		add = {hl = 'GitSignsAdd', text = '│', numhl='GitSignsAddNr', linehl='GitSignsAddLn'},
+		change = {hl = 'GitSignsChange', text = '│', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
+		delete = {hl = 'GitSignsDelete', text = '|', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
+		topdelete = {hl = 'GitSignsDelete', text = '|', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
+		changedelete = {hl = 'GitSignsChange', text = '|', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'}
+	}
+}
+require('telescope').setup{
+  defaults = {
+    layout_strategy = 'vertical',
+  },
+}
 
-" Enable/disable auto-hiding the tab bar when there is a single buffer
-let bufferline.auto_hide = v:false
+require('todo-comments').setup {}
 
-" Enable/disable current/total tabpages indicator (top right corner)
-let bufferline.tabpages = v:true
+local nvim_tree_events = require('nvim-tree.events')
 
-" Enable/disable close button
-let bufferline.closable = v:true
+EOF
 
-" Enables/disable clickable tabs
-"  - left-click: go to buffer
-"  - middle-click: delete buffer
-let bufferline.clickable = v:true
-
-" Excludes buffers from the tabline
-let bufferline.exclude_ft = ['javascript']
-let bufferline.exclude_name = ['package.json']
-
-" Enable/disable icons
-" if set to 'buffer_number', will show buffer number in the tabline
-" if set to 'numbers', will show buffer index in the tabline
-" if set to 'both', will show buffer index and icons in the tabline
-" if set to 'buffer_number_with_icon', will show buffer number and icons in the tabline
-let bufferline.icons = v:true
-
-" Sets the icon's highlight group.
-" If false, will use nvim-web-devicons colors
-let bufferline.icon_custom_colors = v:false
-
-" Configure icons on the bufferline.
-let bufferline.icon_separator_active = '▎'
-let bufferline.icon_separator_inactive = '▎'
-let bufferline.icon_close_tab = ''
-let bufferline.icon_close_tab_modified = '●'
-let bufferline.icon_pinned = '車'
-
-" If true, new buffers will be inserted at the start/end of the list.
-" Default is to insert after current buffer.
-let bufferline.insert_at_start = v:false
-let bufferline.insert_at_end = v:false
-
-" Sets the maximum padding width with which to surround each tab.
-let bufferline.maximum_padding = 4
-
-" Sets the maximum buffer name length.
-let bufferline.maximum_length = 30
-
-" If set, the letters for each buffer in buffer-pick mode will be
-" assigned based on their name. Otherwise or in case all letters are
-" already assigned, the behavior is to assign letters in order of
-" usability (see order below)
-let bufferline.semantic_letters = v:true
-
-" New buffer letters are assigned in this order. This order is
-" optimal for the qwerty keyboard layout but might need adjustement
-" for other layouts.
-let bufferline.letters =
-  \ 'asdfjkl;ghnmxcvbziowerutyqpASDFJKLGHNMXCVBZIOWERUTYQP'
-
-" Sets the name of unnamed buffers. By default format is "[Buffer X]"
-" where X is the buffer number. But only a static string is accepted here.
-let bufferline.no_name_title = v:null
