@@ -4,12 +4,17 @@ let mapleader = " "
 set ttimeout
 set ttimeoutlen=10
 
+set fillchars+=diff:╱
+
 filetype on
 filetype indent on
 filetype plugin on
 
 set encoding=UTF-8
 set updatetime=100
+
+set foldenable 
+set foldmethod=indent
 
 set mouse+=a
 set nocompatible
@@ -33,6 +38,12 @@ call plug#begin()
 " Plug 'vim-airline/vim-airline-themes'
 Plug 'nvim-lualine/lualine.nvim'
 
+" Tab management
+Plug 'kdheepak/tabline.nvim'
+
+" Folding
+Plug 'tmhedberg/SimpylFold'
+
 " File trees
 " Plug 'preservim/nerdtree' |
 "             \ Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -43,7 +54,7 @@ Plug 'wfxr/minimap.vim', {'do': ':!cargo install --locked code-minimap'}
 
 " Themes
 Plug 'joshdick/onedark.vim'
-" Plug 'rebelot/kanagawa.nvim'
+Plug 'rebelot/kanagawa.nvim'
 
 " Icons
 " Plug 'ryanoasis/vim-devicons'
@@ -63,6 +74,11 @@ Plug 'lewis6991/gitsigns.nvim'
 Plug 'tpope/vim-fugitive'
 " Plug 'tanvirtin/vgit.nvim'
 " Plug 'TimUntersberger/neogit'
+Plug 'sindrets/diffview.nvim'
+
+" Debugger
+" Plug 'puremourning/vimspector'
+" Plug 'sakhnik/nvim-gdb'
 
 " Search
 "Plug 'ctrlpvim/ctrlp.vim'
@@ -83,12 +99,16 @@ Plug 'fannheyward/coc-rust-analyzer'
 Plug 'SirVer/ultisnips', { 'do': ':!pip3 install neovim' }
 Plug 'tpope/vim-commentary'
 
+" Lainnguage specific plugins
+Plug 'hashivim/vim-terraform'
+
 Plug 'fatih/vim-go', { 'do': 'GoInstallBinaries' }
 " Linter
 Plug 'sbdchd/neoformat'
 
 call plug#end()
 
+let g:go_metalinter_autosave_enabled = ['all']
 let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/UltiSnips']
 
 let g:minimap_width = 5
@@ -103,11 +123,14 @@ augroup fmt
   autocmd!
   autocmd BufWritePre * undojoin | Neoformat
 augroup END
+
 let g:neoformat_clangformat = {
   \ 'exe': 'clang-format',
   \ 'args': ['-style=file'],
   \ 'stdin': 1,
   \ }
+
+let g:neoformat_enabled_yaml = ['prettier']
 
 " NERDtree
 nnoremap <leader>nt :NvimTreeFindFileToggle<CR>
@@ -116,10 +139,19 @@ nnoremap <leader>nt :NvimTreeFindFileToggle<CR>
 " autocmd BufEnter * NvimTreeFindFileToggle
 
 colorscheme onedark
+" colorscheme kanagawa
 
 " shortcuts to go to vimrc
 nnoremap <leader>ss :source $MYVIMRC<CR>
 nnoremap <leader>se :e $MYVIMRC<CR>
+
+" Quickfix list
+nnoremap <leader>qo :copen<CR>
+nnoremap <leader>qc :cclose<CR>
+nnoremap <leader>qn :cnext<CR>
+nnoremap <leader>qp :cprev<CR>
+nnoremap <leader>qt :cfirst<CR>
+nnoremap <leader>ql :clast<CR>
 
 " spacemacs like window management
 nnoremap <leader>wj :wincmd j<CR>
@@ -140,18 +172,29 @@ nnoremap <leader>bn :bnext <CR>
 nnoremap <leader>bp :bprevious <CR>
 nnoremap <leader>bd :bdelete <CR>
 nnoremap <leader>bb <cmd>Telescope buffers<cr>
+nnoremap <leader>br :file 
 
 nnoremap <leader>tl :tabnext <CR>
 nnoremap <leader>th :tabprevious <CR>
+nnoremap <tab> :tabnext <CR>
+nnoremap <S-tab> :tabprevious <CR>
 nnoremap <leader>tn :tabnew <CR>
 nnoremap <leader>td :tabclose <CR>
 nnoremap <leader>tt :tabedit %<CR>
+nnoremap <leader>tr :TablineTabRename 
 
 " Todo's
 nnoremap <leader>? :TodoTelescope <CR>
 
-" git mappings
+" Git mappings
 nnoremap <leader>gd :Gitsigns diffthis<CR>
+nnoremap <leader>gs <cmd>:G<CR>
+nnoremap <leader>gf <cmd>:Git fetch<CR>
+nnoremap <leader>gb :Git checkout -b<SPACE>
+nnoremap <leader>gc :Git checkout <SPACE>
+nnoremap <leader>gs :Git<CR>
+nnoremap <leader>gp :Git push<CR>
+nnoremap <leader>gl :Git log --oneline<CR>
 
 " Terminal mappings
 :tnoremap <Esc> <C-\><C-n>
@@ -168,8 +211,6 @@ nnoremap <leader>fs <cmd>Telescope grep_string<cr>
 
 nnoremap <leader>mm :MinimapToggle<cr>
 
-" Git mappings
-nnoremap <leader>gs <cmd>Neogit<cr>
 
 " Coc Default config
 " Some servers have issues with backup files, see #649.
@@ -377,7 +418,8 @@ require('gitsigns').setup {
 		delete = {hl = 'GitSignsDelete', text = '|', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
 		topdelete = {hl = 'GitSignsDelete', text = '|', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
 		changedelete = {hl = 'GitSignsChange', text = '|', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'}
-	}
+	},
+	current_line_blame = true,
 }
 require('telescope').setup{
   defaults = {
@@ -388,6 +430,8 @@ require('telescope').setup{
 require('todo-comments').setup {}
 
 local nvim_tree_events = require('nvim-tree.events')
+
+require('tabline').setup {}
 
 EOF
 
