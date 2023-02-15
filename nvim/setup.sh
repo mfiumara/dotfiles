@@ -18,3 +18,7 @@ echo "Creating sym-link for ultisnips:"
 ln -s $(pwd)/nvim/UltiSnips ~/.vim/UltiSnips
 ls -hl ~/.vim
 
+echo "Creating sym-link for coc-settings:"
+ln -s $(pwd)/nvim/coc-settings.json ~/.config/nvim/coc-settings.json
+ls -hl ~/.vim
+

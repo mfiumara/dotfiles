@@ -43,7 +43,6 @@ Plug 'kdheepak/tabline.nvim'
 
 " Folding
 Plug 'tmhedberg/SimpylFold'
-
 " File trees
 " Plug 'preservim/nerdtree' |
 "             \ Plug 'Xuyuanp/nerdtree-git-plugin'

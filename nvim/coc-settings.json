@@ -4,5 +4,11 @@
     "args": ["server", "-m", "stream"],
     // customize filetypes to your needs
     "filetypes": ["graphql", "graphqls"]
+  },
+  "terraform": {
+    "command": "terraform-ls",
+    "args": ["serve"],
+    "filetypes": ["terraform", "tf"],
+    "initializationOptions": {}
   }
 }
