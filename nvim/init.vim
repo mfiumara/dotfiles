@@ -210,6 +210,9 @@ nnoremap <leader>fs <cmd>Telescope grep_string<cr>
 
 nnoremap <leader>mm :MinimapToggle<cr>
 
+nnoremap <leader>at :GoAddTags bson<cr>
+
+let g:go_addtags_transform = 'camelcase'
 
 " Coc Default config
 " Some servers have issues with backup files, see #649.
@@ -269,7 +272,10 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
-nmap <silent> ge <cmd>CocCommand rust-analyzer.explainError<CR>
+
+" Language specific extensions
+nmap <silent> glre <cmd>CocCommand rust-analyzer.explainError<CR>
+
 
 " CTRL + O and CTRL + I to jump back and forth in nav
 
