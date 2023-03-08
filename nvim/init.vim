@@ -107,7 +107,6 @@ Plug 'sbdchd/neoformat'
 
 call plug#end()
 
-let g:go_metalinter_autosave_enabled = ['all']
 let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/UltiSnips']
 
 let g:minimap_width = 5
@@ -175,11 +174,12 @@ nnoremap <leader>br :file
 
 nnoremap <leader>tl :tabnext <CR>
 nnoremap <leader>th :tabprevious <CR>
-nnoremap <tab> :tabnext <CR>
-nnoremap <S-tab> :tabprevious <CR>
+" nnoremap <tab> :tabnext <CR>
+" nnoremap <S-tab> :tabprevious <CR>
 nnoremap <leader>tn :tabnew <CR>
 nnoremap <leader>td :tabclose <CR>
-nnoremap <leader>tt :tabedit %<CR>
+" nnoremap <leader>tt :tabedit %<CR>
+" nnoremap <leader>` :ToggleTerm<CR>
 nnoremap <leader>tr :TablineTabRename 
 
 " Todo's
@@ -190,7 +190,7 @@ nnoremap <leader>gd :Gitsigns diffthis<CR>
 nnoremap <leader>gs <cmd>:G<CR>
 nnoremap <leader>gf <cmd>:Git fetch<CR>
 nnoremap <leader>gb :Git checkout -b<SPACE>
-nnoremap <leader>gc :Git checkout <SPACE>
+nnoremap <leader>gc :Git checkout<SPACE>
 nnoremap <leader>gs :Git<CR>
 nnoremap <leader>gp :Git push<CR>
 nnoremap <leader>gl :Git log --oneline<CR>
@@ -210,8 +210,11 @@ nnoremap <leader>fs <cmd>Telescope grep_string<cr>
 
 nnoremap <leader>mm :MinimapToggle<cr>
 
-nnoremap <leader>at :GoAddTags bson<cr>
+nnoremap <leader>gat :GoAddTags bson<cr>
+nnoremap <leader>gfs :GoFillStruct<cr>
 
+
+let g:go_metalinter_autosave_enabled = ['all']
 let g:go_addtags_transform = 'camelcase'
 
 " Coc Default config
@@ -391,7 +394,11 @@ require('nvim-treesitter.configs').setup {
 	ensure_installed = { "c", "lua", "rust" },
 }
  
-require("toggleterm").setup{}
+require('toggleterm').setup{
+	direction = 'float',
+	open_mapping = [[<leader>`]],
+	insert_mapping = true,
+}
 
 require('nvim-tree').setup {
  	renderer = { highlight_git = true, icons = { show = { folder = false }, git_placement = "signcolumn",	
