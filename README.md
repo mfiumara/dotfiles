@@ -7,6 +7,7 @@ This assumes the following dependencies are installed:
 * ripgrep
 * tmux
 * code-minimap
+* python3
 
 ## Installation
 

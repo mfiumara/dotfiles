@@ -2,6 +2,7 @@
 
 # Make nvim directory if it does not yet exist
 mkdir -p ~/.config/nvim
+mkdir -p ~/.vim
 
 echo "Removing any existing init.vim"
 rm ~/.config/nvim/init.vim
