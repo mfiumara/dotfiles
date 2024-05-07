@@ -179,7 +179,7 @@ nnoremap <leader>th :tabprevious <CR>
 nnoremap <leader>tn :tabnew <CR>
 nnoremap <leader>td :tabclose <CR>
 " nnoremap <leader>tt :tabedit %<CR>
-" nnoremap <leader>` :ToggleTerm<CR>
+nnoremap <leader>` :ToggleTerm<CR>
 nnoremap <leader>tr :TablineTabRename 
 
 " Todo's
@@ -396,7 +396,7 @@ require('nvim-treesitter.configs').setup {
  
 require('toggleterm').setup{
 	direction = 'float',
-	open_mapping = [[<leader>`]],
+---	open_mapping = [[<leader>`]],
 	insert_mapping = true,
 }
 
