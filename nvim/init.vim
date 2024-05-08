@@ -85,6 +85,14 @@ Plug 'sindrets/diffview.nvim'
 "Plug 'junegunn/fzf.vim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
+Plug 'wincent/ferret'
+
+
+" AI
+Plug 'jackMort/ChatGPT.nvim'
+Plug 'MunifTanjim/nui.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
 
 " LANGUAGES
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -143,6 +151,8 @@ colorscheme onedark
 nnoremap <leader>ss :source $MYVIMRC<CR>
 nnoremap <leader>se :e $MYVIMRC<CR>
 
+nnoremap <leader>rr :redraw<CR>
+
 " Quickfix list
 nnoremap <leader>qo :copen<CR>
 nnoremap <leader>qc :cclose<CR>
@@ -150,6 +160,14 @@ nnoremap <leader>qn :cnext<CR>
 nnoremap <leader>qp :cprev<CR>
 nnoremap <leader>qt :cfirst<CR>
 nnoremap <leader>ql :clast<CR>
+
+" Location list
+nnoremap <leader>lo :lopen<CR>
+nnoremap <leader>lc :lclose<CR>
+nnoremap <leader>ln :lnext<CR>
+nnoremap <leader>lp :lprev<CR>
+nnoremap <leader>lt :lfirst<CR>
+nnoremap <leader>ll :llast<CR>
 
 " spacemacs like window management
 nnoremap <leader>wj :wincmd j<CR>
@@ -178,7 +196,7 @@ nnoremap <leader>th :tabprevious <CR>
 " nnoremap <S-tab> :tabprevious <CR>
 nnoremap <leader>tn :tabnew <CR>
 nnoremap <leader>td :tabclose <CR>
-" nnoremap <leader>tt :tabedit %<CR>
+nnoremap <leader>tt :tabedit %<CR>
 nnoremap <leader>` :ToggleTerm<CR>
 nnoremap <leader>tr :TablineTabRename 
 
@@ -193,7 +211,7 @@ nnoremap <leader>gb :Git checkout -b<SPACE>
 nnoremap <leader>gc :Git checkout<SPACE>
 nnoremap <leader>gs :Git<CR>
 nnoremap <leader>gp :Git push<CR>
-nnoremap <leader>gl :Git log --oneline<CR>
+nnoremap <leader>gl :Git log<CR>
 
 " Terminal mappings
 :tnoremap <Esc> <C-\><C-n>
@@ -212,6 +230,9 @@ nnoremap <leader>mm :MinimapToggle<cr>
 
 nnoremap <leader>gat :GoAddTags bson<cr>
 nnoremap <leader>gfs :GoFillStruct<cr>
+nnoremap <leader>gr :GoRename<cr>
+nnoremap <leader>gi :GoImplements<cr>
+nnoremap <leader>gv :GoVet<cr>
 
 
 let g:go_metalinter_autosave_enabled = ['all']
@@ -395,15 +416,14 @@ require('nvim-treesitter.configs').setup {
 }
  
 require('toggleterm').setup{
-	direction = 'float',
----	open_mapping = [[<leader>`]],
+	open_mapping = [[<leader>`]],
 	insert_mapping = true,
 }
 
 require('nvim-tree').setup {
  	renderer = { highlight_git = true, icons = { show = { folder = false }, git_placement = "signcolumn",	
 		glyphs = {
-			git = {	unstaged = "M",	staged = "S", unmerged = "", renamed = "R", untracked = "*", deleted = "D", ignored = "i" },
+			git = {	unstaged = "M",	staged = "S", unmerged = "", renamed = "R", untracked = "U", deleted = "D", ignored = "i" },
 		},
 		},
 	},
@@ -444,6 +464,10 @@ require('todo-comments').setup {}
 local nvim_tree_events = require('nvim-tree.events')
 
 require('tabline').setup {}
+
+require('chatgpt').setup({
+	api_key_cmd = "gpg --decrypt ~/secret.txt.gpg 2>/dev/null"
+})
 
 EOF
 
