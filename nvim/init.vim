@@ -416,7 +416,7 @@ require('nvim-treesitter.configs').setup {
 }
  
 require('toggleterm').setup{
-	open_mapping = [[<leader>`]],
+--	open_mapping = [[<leader>`]],
 	insert_mapping = true,
 	direction = 'float'
 }
