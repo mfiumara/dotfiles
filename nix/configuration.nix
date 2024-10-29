@@ -100,8 +100,16 @@
       oh-my-zsh
       vscode
       direnv
+      nrf-command-line-tools
+      segger-jlink
     ];
   };
+
+  # Required for nrf-command-line-tools
+  nixpkgs.config.permittedInsecurePackages = [
+    "segger-jlink-qt4-794l"
+  ];
+  nixpkgs.config.segger-jlink.acceptLicense = true;
 
   # Define home-manager settings inside configuration as module
   home-manager.users.mattiaf = { pkgs, ... }: {
