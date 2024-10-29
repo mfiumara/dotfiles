@@ -23,3 +23,7 @@ Run:
 [] convert init.vim to lua
 [] kanagawa theme
 [] telescope like temporary terminals
+
+## NixOS
+
+For NixOS, the scripts will probably not work. Just run the `./nix/setup.sh` script and figure out the rest from there.
