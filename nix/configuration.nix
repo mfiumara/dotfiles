@@ -99,12 +99,14 @@
       zsh
       oh-my-zsh
       vscode
+      direnv
     ];
   };
 
   # Define home-manager settings inside configuration as module
   home-manager.users.mattiaf = { pkgs, ... }: {
     programs = {
+      direnv.enable = true;
       zsh = {
         enable = true;
 	enableCompletion = true;
@@ -119,10 +121,10 @@
           ];
         };
       };
-#      tmux = {
-#        enable = true;
-#        shell = "\${pkgs.zsh}/bin/zsh";
-#      };
+     tmux = {
+       enable = true;
+       shell = "${pkgs.zsh}/bin/zsh";
+     };
     };
   
     # The state version is required and should stay at the version you
