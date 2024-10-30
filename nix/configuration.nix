@@ -86,30 +86,7 @@
     isNormalUser = true;
     description = "Mattia Fiumara";
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
-      tmux
-      neovim
-      git
-      python3
-      go
-      kitty
-      neofetch
-      slack
-      wl-clipboard
-      zsh
-      oh-my-zsh
-      vscode
-      direnv
-      nrf-command-line-tools
-      segger-jlink
-    ];
   };
-
-  # Required for nrf-command-line-tools
-  nixpkgs.config.permittedInsecurePackages = [
-    "segger-jlink-qt4-794l"
-  ];
-  nixpkgs.config.segger-jlink.acceptLicense = true;
 
   # Define home-manager settings inside configuration as module
   home-manager.users.mattiaf = { pkgs, ... }: {
@@ -133,6 +110,12 @@
        enable = true;
        shell = "${pkgs.zsh}/bin/zsh";
      };
+     kitty = {
+       enable = true;
+       extraConfig = ''
+         map f11 toggle_fullscreen
+       '';
+     };
     };
   
     # The state version is required and should stay at the version you
@@ -154,7 +137,32 @@
   environment.systemPackages = with pkgs; [
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   #  wget
+      nrf-command-line-tools
+      segger-jlink
+      tmux
+      neovim
+      git
+      go
+      kitty
+      neofetch
+      slack
+      wl-clipboard
+      zsh
+      oh-my-zsh
+      vscode
+      direnv
+      spotify
+      jq
+      fd
   ];
+
+  # Required for nrf-command-line-tools
+  nixpkgs.config.permittedInsecurePackages = [
+    "segger-jlink-qt4-794l"
+  ];
+  nixpkgs.config.segger-jlink.acceptLicense = true;
+
+  services.udev.packages = [ pkgs.segger-jlink ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
