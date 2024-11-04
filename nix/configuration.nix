@@ -88,6 +88,8 @@
     extraGroups = [ "networkmanager" "wheel" ];
   };
 
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
   # Define home-manager settings inside configuration as module
   home-manager.users.mattiaf = { pkgs, ... }: {
     programs = {
