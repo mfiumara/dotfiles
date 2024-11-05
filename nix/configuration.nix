@@ -4,13 +4,16 @@
 
 { config, pkgs, ... }:
 
+let
+  nixvim = import (builtins.fetchGit {
+    url = "https://github.com/nix-community/nixvim";
+    ref = "nixos-24.05";
+  });
+in
 {
   imports =
     [ # Include the results of the hardware scan.
       /etc/nixos/hardware-configuration.nix
-      # TODO: To be able to do this we need:
-      # sudo nix-channel --add https://github.com/nix-community/home-manager/archive/release-24.05.tar.gz home-manager
-      # sudo nix-channel --update
       <home-manager/nixos>
     ];
 
@@ -92,6 +95,7 @@
 
   # Define home-manager settings inside configuration as module
   home-manager.users.mattiaf = { pkgs, ... }: {
+    imports = [ nixvim.homeManagerModules.nixvim ];
     programs = {
       direnv.enable = true;
       zsh = {
@@ -118,6 +122,13 @@
          map f11 toggle_fullscreen
        '';
      };
+#     nixvim = {
+#       enable = true;
+#       plugins = {
+#         lualine.enable = true;
+#	 nvim-tree.enable = true;
+#       };
+#     };
     };
   
     # The state version is required and should stay at the version you
@@ -156,6 +167,10 @@
       spotify
       jq
       fd
+      python3
+      mongodb-compass
+      saleae-logic-2
+      pkgs.stdenv.cc.cc.lib
   ];
 
   # Required for nrf-command-line-tools
@@ -164,7 +179,7 @@
   ];
   nixpkgs.config.segger-jlink.acceptLicense = true;
 
-  services.udev.packages = [ pkgs.segger-jlink ];
+  services.udev.packages = [ pkgs.segger-jlink pkgs.saleae-logic-2 ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
