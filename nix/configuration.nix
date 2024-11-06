@@ -170,8 +170,16 @@ in
       python3
       mongodb-compass
       saleae-logic-2
-      pkgs.stdenv.cc.cc.lib
+      rustup
+      pkg-config
+      openssl
   ];
+
+  # This seems like a dirty hack to get cargo to build some packages.
+  # This should belong in a local config
+  environment.variables = {
+    PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
+  };
 
   # Required for nrf-command-line-tools
   nixpkgs.config.permittedInsecurePackages = [
