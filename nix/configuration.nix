@@ -173,12 +173,15 @@ in
       rustup
       pkg-config
       openssl
+      stdenv.cc.cc
   ];
 
   # This seems like a dirty hack to get cargo to build some packages.
   # This should belong in a local config
   environment.variables = {
     PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
+    # This is very wrong but this hack works to get jupyter working
+    LD_LIBRARY_PATH = "${pkgs.stdenv.cc.cc.lib}/lib";
   };
 
   # Required for nrf-command-line-tools
