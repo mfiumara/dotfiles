@@ -4,17 +4,13 @@
 
 { config, pkgs, ... }:
 
-let
-  nixvim = import (builtins.fetchGit {
-    url = "https://github.com/nix-community/nixvim";
-    ref = "nixos-24.05";
-  });
-in
 {
   imports =
     [ # Include the results of the hardware scan.
       /etc/nixos/hardware-configuration.nix
       <home-manager/nixos>
+      # TODO: Hardcoded home folder here, figure out how to make this compatible!
+      /home/mattiaf/dotfiles/nix/nvim.nix
     ];
 
   # Bootloader.
@@ -95,7 +91,6 @@ in
 
   # Define home-manager settings inside configuration as module
   home-manager.users.mattiaf = { pkgs, ... }: {
-    imports = [ nixvim.homeManagerModules.nixvim ];
     programs = {
       direnv.enable = true;
       zsh = {
@@ -122,13 +117,6 @@ in
          map f11 toggle_fullscreen
        '';
      };
-#     nixvim = {
-#       enable = true;
-#       plugins = {
-#         lualine.enable = true;
-#	 nvim-tree.enable = true;
-#       };
-#     };
     };
   
     # The state version is required and should stay at the version you
@@ -153,7 +141,6 @@ in
       nrf-command-line-tools
       segger-jlink
       tmux
-      neovim
       git
       go
       kitty
@@ -174,14 +161,18 @@ in
       pkg-config
       openssl
       stdenv.cc.cc
+      kicad
+      inetutils
+      gcc
   ];
 
   # This seems like a dirty hack to get cargo to build some packages.
   # This should belong in a local config
   environment.variables = {
     PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
-    # This is very wrong but this hack works to get jupyter working
-    LD_LIBRARY_PATH = "${pkgs.stdenv.cc.cc.lib}/lib";
+    # This is very wrong but this hack works to get jupyter working and jlink
+    LD_LIBRARY_PATH = "${pkgs.stdenv.cc.cc.lib}/lib:/run/current-system/sw/lib";
+    JLINK_PATH="/run/current-system/sw/lib/libjlinkarm.so";
   };
 
   # Required for nrf-command-line-tools
@@ -205,7 +196,7 @@ in
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
 
-  # Open ports in the firewall.
+  # Open ports 
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.

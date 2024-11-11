@@ -26,4 +26,6 @@ Run:
 
 ## NixOS
 
-For NixOS, the scripts will probably not work. Just run the `./nix/setup.sh` script and figure out the rest from there.
+For NixOS, the scripts will not work. Run the `./nix/setup.sh` script and everything will be installed.
+NOTE: This assumes you have checked out this respotiroy in the home directory under ~/dotfiles!
+
