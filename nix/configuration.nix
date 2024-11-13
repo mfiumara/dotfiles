@@ -164,6 +164,7 @@
       kicad
       inetutils
       gcc
+      google-chrome
   ];
 
   # This seems like a dirty hack to get cargo to build some packages.
