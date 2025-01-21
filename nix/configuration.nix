@@ -9,8 +9,6 @@
     [ # Include the results of the hardware scan.
       /etc/nixos/hardware-configuration.nix
       <home-manager/nixos>
-      # TODO: Hardcoded home folder here, figure out how to make this compatible!
-      /home/mattiaf/dotfiles/nix/nvim.nix
     ];
 
   # Bootloader.
@@ -62,20 +60,21 @@
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  hardware.pulseaudio.enable = false;
+#  hardware.pulseaudio.enable = true;
   security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
+#  services.pipewire.enable = false;
+#  services.pipewire = {
+#   enable = true;
+#   alsa.enable = true;
+#   alsa.support32Bit = true;
+#   pulse.enable = true;
     # If you want to use JACK applications, uncomment this
     #jack.enable = true;
 
     # use the example session manager (no others are packaged yet so this is enabled by default,
     # no need to redefine it in your config for now)
     #media-session.enable = true;
-  };
+# };
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
@@ -84,8 +83,11 @@
   users.users.mattiaf = {
     isNormalUser = true;
     description = "Mattia Fiumara";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "audio" ];
   };
+
+  # Fonts
+  fonts.packages = with pkgs; [ nerdfonts ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -116,9 +118,10 @@
        extraConfig = ''
          map f11 toggle_fullscreen
        '';
+       font.name = "FiraCode Nerd Font";
      };
     };
-  
+
     # The state version is required and should stay at the version you
     # originally installed.
     home.stateVersion = "24.05";
@@ -154,6 +157,7 @@
       spotify
       jq
       fd
+      cmake
       python3
       mongodb-compass
       saleae-logic-2
@@ -164,7 +168,25 @@
       kicad
       inetutils
       gcc
+      glibc
+      glibc.dev
       google-chrome
+      jetbrains.rust-rover
+      jetbrains.goland
+      ripgrep
+      probe-rs
+      google-cloud-sdk
+      wireshark
+      okular
+      pinta
+      openvpn
+      nodejs_22
+      docker
+      htop
+      todoist
+      todoist-electron
+      alacritty
+      neovim
   ];
 
   # This seems like a dirty hack to get cargo to build some packages.
@@ -210,5 +232,5 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "24.05"; # Did you read the comment?
-
 }
+
