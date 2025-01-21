@@ -53,6 +53,55 @@ vim.opt.relativenumber = true
 -- Display a ruler in the command area
 vim.opt.ruler = true
 
+-- Keymaps
+local keymap = vim.api.nvim_set_keymap
+local opts = { noremap = true, silent = true }
+
+-- Redraw screen
+keymap("n", "<leader>rr", ":redraw<CR>", opts)
+
+-- Quickfix list
+keymap("n", "<leader>qo", ":copen<CR>", opts)
+keymap("n", "<leader>qc", ":cclose<CR>", opts)
+keymap("n", "<leader>qn", ":cnext<CR>", opts)
+keymap("n", "<leader>qp", ":cprev<CR>", opts)
+keymap("n", "<leader>qt", ":cfirst<CR>", opts)
+keymap("n", "<leader>ql", ":clast<CR>", opts)
+
+-- Location list
+keymap("n", "<leader>lo", ":lopen<CR>", opts)
+keymap("n", "<leader>lc", ":lclose<CR>", opts)
+keymap("n", "<leader>ln", ":lnext<CR>", opts)
+keymap("n", "<leader>lp", ":lprev<CR>", opts)
+keymap("n", "<leader>lt", ":lfirst<CR>", opts)
+keymap("n", "<leader>ll", ":llast<CR>", opts)
+
+-- Spacemacs-like window management
+keymap("n", "<leader>wj", ":wincmd j<CR>", opts)
+keymap("n", "<leader>wk", ":wincmd k<CR>", opts)
+keymap("n", "<leader>wh", ":wincmd h<CR>", opts)
+keymap("n", "<leader>wl", ":wincmd l<CR>", opts)
+keymap("n", "<leader>wr", ":wincmd r<CR>", opts)
+keymap("n", "<leader>+", ":res +5<CR>", opts)
+keymap("n", "<leader>_", ":res -5<CR>", opts)
+keymap("n", "<leader>wo", ":on<CR>", opts)
+keymap("n", "<leader>wd", ":q<CR>", opts)
+keymap("n", "<leader>sv", ":vsplit<CR>", opts)
+keymap("n", "<leader>sh", ":split<CR>", opts)
+
+-- Buffer management
+keymap("n", "<leader>bn", ":bnext<CR>", opts)
+keymap("n", "<leader>bp", ":bprevious<CR>", opts)
+keymap("n", "<leader>bd", ":bdelete<CR>", opts)
+keymap("n", "<leader>br", ":file<CR>", opts)
+
+-- Tab management
+keymap("n", "<leader>tl", ":tabnext<CR>", opts)
+keymap("n", "<leader>th", ":tabprevious<CR>", opts)
+keymap("n", "<leader>tn", ":tabnew<CR>", opts)
+keymap("n", "<leader>td", ":tabclose<CR>", opts)
+keymap("n", "<leader>tt", ":tabedit %<CR>", opts)
+
 -- Setup lazy.nvim
 require("lazy").setup({
   spec = {

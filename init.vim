@@ -1,24 +1,9 @@
 set fillchars+=diff:╱
 
-filetype on
-filetype indent on
-filetype plugin on
-
-let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
-if empty(glob(data_dir . '/autoload/plug.vim'))
-  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
-
 call plug#begin()
 "
 " VISUALS
 "
-" Status lines
-" Plug 'akinsho/bufferline.nvim'
-" Plug 'vim-airline/vim-airline'
-" Plug 'vim-airline/vim-airline-themes'
-Plug 'nvim-lualine/lualine.nvim'
 
 " Tab management
 Plug 'kdheepak/tabline.nvim'
@@ -33,18 +18,7 @@ Plug 'kyazdani42/nvim-tree.lua'
 " Mini-map
 Plug 'wfxr/minimap.vim', {'do': ':!cargo install --locked code-minimap'}
 
-" Themes
-Plug 'joshdick/onedark.vim'
-Plug 'rebelot/kanagawa.nvim'
-
-" Icons
-" Plug 'ryanoasis/vim-devicons'
-Plug 'kyazdani42/nvim-web-devicons' " Recommended (for coloured icons)
-
 " Syntax highlighting
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'folke/todo-comments.nvim'
-
 " Terminal stuff
 Plug 'akinsho/toggleterm.nvim', {'tag' : 'v2.*'}
 
@@ -57,23 +31,14 @@ Plug 'tpope/vim-fugitive'
 " Plug 'TimUntersberger/neogit'
 Plug 'sindrets/diffview.nvim'
 
-" Debugger
-" Plug 'puremourning/vimspector'
-" Plug 'sakhnik/nvim-gdb'
-
 " Search
 "Plug 'ctrlpvim/ctrlp.vim'
 "Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 "Plug 'junegunn/fzf.vim'
-Plug 'nvim-lua/plenary.nvim'
 Plug 'wincent/ferret'
 
 
 " AI
-Plug 'jackMort/ChatGPT.nvim'
-Plug 'MunifTanjim/nui.nvim'
-Plug 'nvim-lua/plenary.nvim'
-
 " LANGUAGES
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " CoC language extensions
@@ -83,7 +48,6 @@ Plug 'fannheyward/coc-rust-analyzer'
 " CocInstall coc-go
 " CocInstall coc-markdownlint
 
-Plug 'SirVer/ultisnips', { 'do': ':!pip3 install neovim' }
 Plug 'tpope/vim-commentary'
 
 " Lainnguage specific plugins
@@ -94,15 +58,6 @@ Plug 'fatih/vim-go', { 'do': 'GoInstallBinaries' }
 Plug 'sbdchd/neoformat'
 
 call plug#end()
-
-let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/UltiSnips']
-
-let g:minimap_width = 5
-" let g:minimap_auto_start = 1
-let g:minimap_auto_start_win_enter = 1
-let g:minimap_git_colors = 1
-let g:minimap_highlight_range = 1
-let g:minimap_highlight_search = 1
 
 " Auto-format on save
 augroup fmt
@@ -131,51 +86,6 @@ colorscheme onedark
 nnoremap <leader>ss :source $MYVIMRC<CR>
 nnoremap <leader>se :e $MYVIMRC<CR>
 
-nnoremap <leader>rr :redraw<CR>
-
-" Quickfix list
-nnoremap <leader>qo :copen<CR>
-nnoremap <leader>qc :cclose<CR>
-nnoremap <leader>qn :cnext<CR>
-nnoremap <leader>qp :cprev<CR>
-nnoremap <leader>qt :cfirst<CR>
-nnoremap <leader>ql :clast<CR>
-
-" Location list
-nnoremap <leader>lo :lopen<CR>
-nnoremap <leader>lc :lclose<CR>
-nnoremap <leader>ln :lnext<CR>
-nnoremap <leader>lp :lprev<CR>
-nnoremap <leader>lt :lfirst<CR>
-nnoremap <leader>ll :llast<CR>
-
-" spacemacs like window management
-nnoremap <leader>wj :wincmd j<CR>
-nnoremap <leader>wk :wincmd k<CR>
-nnoremap <leader>wh :wincmd h<CR>
-nnoremap <leader>wl :wincmd l<CR>
-nnoremap <leader>wr :wincmd r<CR>
-nnoremap <leader>+ :res +5<CR>
-nnoremap <leader>_ :res -5<CR>
-nnoremap <leader>wo :on<CR>
-nnoremap <leader>wd :q<CR>
-
-nnoremap <leader>sv :vsplit <CR>
-nnoremap <leader>sh :split <CR>
-
-" barbar buffer management
-nnoremap <leader>bn :bnext <CR>
-nnoremap <leader>bp :bprevious <CR>
-nnoremap <leader>bd :bdelete <CR>
-nnoremap <leader>br :file 
-
-nnoremap <leader>tl :tabnext <CR>
-nnoremap <leader>th :tabprevious <CR>
-" nnoremap <tab> :tabnext <CR>
-" nnoremap <S-tab> :tabprevious <CR>
-nnoremap <leader>tn :tabnew <CR>
-nnoremap <leader>td :tabclose <CR>
-nnoremap <leader>tt :tabedit %<CR>
 nnoremap <leader>` :ToggleTerm<CR>
 nnoremap <leader>tr :TablineTabRename 
 
