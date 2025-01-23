@@ -11,14 +11,9 @@ Plug 'kdheepak/tabline.nvim'
 
 " Folding
 Plug 'tmhedberg/SimpylFold'
-" File trees
-" Plug 'preservim/nerdtree' |
-"             \ Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'kyazdani42/nvim-tree.lua'
 
 " Mini-map
 Plug 'wfxr/minimap.vim', {'do': ':!cargo install --locked code-minimap'}
-
 
 " Git plugins
 " Handled by VGit
@@ -90,13 +85,10 @@ nnoremap <leader>tr :TablineTabRename
 
 " Git mappings
 nnoremap <leader>gd :Gitsigns diffthis<CR>
-nnoremap <leader>gs <cmd>:G<CR>
-nnoremap <leader>gf <cmd>:Git fetch<CR>
 nnoremap <leader>gb :Git checkout -b<SPACE>
 nnoremap <leader>gc :Git checkout<SPACE>
 nnoremap <leader>gs :Git<CR>
 nnoremap <leader>gp :Git push<CR>
-nnoremap <leader>gl :Git log<CR>
 
 " Terminal mappings
 :tnoremap <Esc> <C-\><C-n>
