@@ -102,6 +102,9 @@ keymap("n", "<leader>tn", ":tabnew<CR>", opts)
 keymap("n", "<leader>td", ":tabclose<CR>", opts)
 keymap("n", "<leader>tt", ":tabedit %<CR>", opts)
 
+-- Escape mapping for terminal
+keymap('t', '<Esc>', [[<C-\><C-n>]], { noremap = true, silent = true })
+
 -- Setup lazy.nvim
 require("lazy").setup({
   spec = {

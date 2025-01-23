@@ -1,5 +1,6 @@
 set fillchars+=diff:╱
 
+
 call plug#begin()
 "
 " VISUALS
@@ -18,9 +19,6 @@ Plug 'kyazdani42/nvim-tree.lua'
 " Mini-map
 Plug 'wfxr/minimap.vim', {'do': ':!cargo install --locked code-minimap'}
 
-" Syntax highlighting
-" Terminal stuff
-Plug 'akinsho/toggleterm.nvim', {'tag' : 'v2.*'}
 
 " Git plugins
 " Handled by VGit
@@ -32,7 +30,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'sindrets/diffview.nvim'
 
 " Search
-"Plug 'ctrlpvim/ctrlp.vim'
 "Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 "Plug 'junegunn/fzf.vim'
 Plug 'wincent/ferret'
@@ -288,17 +285,7 @@ lua << EOF
 vim.g.loaded = 1
 vim.g.loaded_netrwPlugin = 1
 
--- empty setup using defaults
-require('nvim-treesitter.configs').setup {
-	ensure_installed = { "c", "lua", "rust" },
-}
  
-require('toggleterm').setup{
---	open_mapping = [[<leader>`]],
-	insert_mapping = true,
-	direction = 'float'
-}
-
 require('nvim-tree').setup {
  	renderer = { highlight_git = true, icons = { show = { folder = false }, git_placement = "signcolumn",	
 		glyphs = {
@@ -321,7 +308,6 @@ require('nvim-tree').setup {
 	},
 }
 
-require('lualine').setup()
 require('gitsigns').setup {
 	signs = {
 		add = {hl = 'GitSignsAdd', text = '│', numhl='GitSignsAddNr', linehl='GitSignsAddLn'},
@@ -334,10 +320,6 @@ require('gitsigns').setup {
 }
 
 require('todo-comments').setup {}
-
-local nvim_tree_events = require('nvim-tree.events')
-
-require('tabline').setup {}
 
 require('chatgpt').setup({
 	api_key_cmd = "gpg --decrypt ~/secret.txt.gpg 2>/dev/null"
