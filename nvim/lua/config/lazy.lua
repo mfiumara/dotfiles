@@ -53,6 +53,13 @@ vim.opt.relativenumber = true
 -- Display a ruler in the command area
 vim.opt.ruler = true
 
+-- Set tab width in Neovim using Lua
+vim.opt.tabstop = 4        -- Number of spaces a tab counts for
+vim.opt.shiftwidth = 4     -- Number of spaces to use for each step of (auto)indent
+
+-- Optionally, set softtabstop for insert mode tab handling
+vim.opt.softtabstop = 4    -- Number of spaces for Tab in insert mode
+
 -- Keymaps
 local keymap = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
