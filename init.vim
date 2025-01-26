@@ -18,8 +18,6 @@ Plug 'wfxr/minimap.vim', {'do': ':!cargo install --locked code-minimap'}
 " Git plugins
 " Handled by VGit
 " Plug 'airblade/vim-gitgutter'
-Plug 'lewis6991/gitsigns.nvim'
-Plug 'tpope/vim-fugitive'
 " Plug 'tanvirtin/vgit.nvim'
 " Plug 'TimUntersberger/neogit'
 Plug 'sindrets/diffview.nvim'
@@ -280,17 +278,6 @@ require('nvim-tree').setup {
 			},
 		},
 	},
-}
-
-require('gitsigns').setup {
-	signs = {
-		add = {hl = 'GitSignsAdd', text = '│', numhl='GitSignsAddNr', linehl='GitSignsAddLn'},
-		change = {hl = 'GitSignsChange', text = '│', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
-		delete = {hl = 'GitSignsDelete', text = '|', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
-		topdelete = {hl = 'GitSignsDelete', text = '|', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
-		changedelete = {hl = 'GitSignsChange', text = '|', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'}
-	},
-	current_line_blame = true,
 }
 
 require('todo-comments').setup {}
