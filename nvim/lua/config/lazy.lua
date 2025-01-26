@@ -1,32 +1,32 @@
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
-  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
-  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
-  if vim.v.shell_error ~= 0 then
-    vim.api.nvim_echo({
-      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-      { out, "WarningMsg" },
-      { "\nPress any key to exit..." },
-    }, true, {})
-    vim.fn.getchar()
-    os.exit(1)
-  end
+	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+	local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+	if vim.v.shell_error ~= 0 then
+		vim.api.nvim_echo({
+			{ "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+			{ out, "WarningMsg" },
+			{ "\nPress any key to exit..." },
+		}, true, {})
+		vim.fn.getchar()
+		os.exit(1)
+	end
 end
 vim.opt.rtp:prepend(lazypath)
 
 -- Set the leader key
-vim.g.mapleader = ' '
+vim.g.mapleader = " "
 
 -- Enable timeout for key sequences
 vim.opt.ttimeout = true
-vim.opt.ttimeoutlen = 10  -- Timeout length for key mappings (ms)
+vim.opt.ttimeoutlen = 10 -- Timeout length for key mappings (ms)
 
 -- Customize fill characters for diff mode
 vim.opt.fillchars:append({ diff = "╱" })
 
 -- Enable filetype detection and related features
-vim.cmd("filetype on")        -- Enable filetype detection
+vim.cmd("filetype on") -- Enable filetype detection
 vim.cmd("filetype indent on") -- Enable filetype-specific indenting
 vim.cmd("filetype plugin on") -- Enable filetype-specific plugins
 
@@ -39,6 +39,7 @@ vim.opt.updatetime = 100
 -- Enable folding and set fold method to "indent"
 vim.opt.foldenable = true
 vim.opt.foldmethod = "indent"
+vim.opt.foldlevel = 99 -- Open all folds by default
 
 -- Enable mouse support in all modes
 vim.opt.mouse:append("a")
@@ -54,11 +55,22 @@ vim.opt.relativenumber = true
 vim.opt.ruler = true
 
 -- Set tab width in Neovim using Lua
-vim.opt.tabstop = 4        -- Number of spaces a tab counts for
-vim.opt.shiftwidth = 4     -- Number of spaces to use for each step of (auto)indent
+vim.opt.tabstop = 4 -- Number of spaces a tab counts for
+vim.opt.shiftwidth = 4 -- Number of spaces to use for each step of (auto)indent
 
 -- Optionally, set softtabstop for insert mode tab handling
-vim.opt.softtabstop = 4    -- Number of spaces for Tab in insert mode
+vim.opt.softtabstop = 4 -- Number of spaces for Tab in insert mode
+
+-- Format code on save
+vim.api.nvim_create_augroup("Fmt", { clear = true })
+vim.api.nvim_create_autocmd("BufWritePre", {
+	group = "Fmt",
+	pattern = "*",
+	callback = function()
+		vim.cmd("undojoin") -- Ensure formatting is part of the same undo step
+		vim.lsp.buf.format() -- Trigger LSP formatting
+	end,
+})
 
 -- Keymaps
 local keymap = vim.api.nvim_set_keymap
@@ -110,17 +122,17 @@ keymap("n", "<leader>td", ":tabclose<CR>", opts)
 keymap("n", "<leader>tt", ":tabedit %<CR>", opts)
 
 -- Escape mapping for terminal
-keymap('t', '<Esc>', [[<C-\><C-n>]], { noremap = true, silent = true })
+keymap("t", "<Esc>", [[<C-\><C-n>]], { noremap = true, silent = true })
 
 -- Setup lazy.nvim
 require("lazy").setup({
-  spec = {
-    -- import your plugins
-    { import = "plugins" },
-  },
-  -- Configure any other settings here. See the documentation for more details.
-  -- colorscheme that will be used when installing plugins.
-  install = { colorscheme = { "tokyonight" } },
-  -- automatically check for plugin updates
-  checker = { enabled = true },
+	spec = {
+		-- import your plugins
+		{ import = "plugins" },
+	},
+	-- Configure any other settings here. See the documentation for more details.
+	-- colorscheme that will be used when installing plugins.
+	install = { colorscheme = { "tokyonight" } },
+	-- automatically check for plugin updates
+	checker = { enabled = true },
 })

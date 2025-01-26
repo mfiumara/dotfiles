@@ -1,5 +1,4 @@
 https://github.com/hrsh7th/nvim-cmp
-https://github.com/nvimtools/none-ls.nvim/tree/main
 https://github.com/folke/trouble.nvim
 
 https://github.com/lukas-reineke/lsp-format.nvim
