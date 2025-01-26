@@ -62,6 +62,10 @@ vim.opt.shiftwidth = 4 -- Number of spaces to use for each step of (auto)indent
 vim.opt.softtabstop = 4 -- Number of spaces for Tab in insert mode
 
 -- Format code on save
+-- Note, this is not how it's advised by null-ls and I'm
+-- not sure how good this works. It assumes there's
+-- an LSP attached to the buffer
+-- See https://github.com/nvimtools/none-ls.nvim/wiki/Formatting-on-save
 vim.api.nvim_create_augroup("Fmt", { clear = true })
 vim.api.nvim_create_autocmd("BufWritePre", {
 	group = "Fmt",

@@ -1,4 +1,7 @@
+# 
 https://github.com/hrsh7th/nvim-cmp
+
+# This one is enabled but not sure how to use it?
 https://github.com/folke/trouble.nvim
 
 https://github.com/lukas-reineke/lsp-format.nvim
