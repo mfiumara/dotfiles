@@ -44,10 +44,7 @@ Plug 'tpope/vim-commentary'
 
 " Lainnguage specific plugins
 Plug 'hashivim/vim-terraform'
-
 Plug 'fatih/vim-go', { 'do': 'GoInstallBinaries' }
-" Linter
-Plug 'sbdchd/neoformat'
 
 call plug#end()
 
@@ -63,17 +60,6 @@ let g:neoformat_clangformat = {
   \ 'stdin': 1,
   \ }
 
-let g:neoformat_enabled_yaml = ['prettier']
-
-" NERDtree
-nnoremap <leader>nt :NvimTreeFindFileToggle<CR>
-
-" This breaks stuff
-" autocmd BufEnter * NvimTreeFindFileToggle
-
-colorscheme onedark
-" colorscheme kanagawa
-
 " shortcuts to go to vimrc
 nnoremap <leader>ss :source $MYVIMRC<CR>
 nnoremap <leader>se :e $MYVIMRC<CR>
@@ -85,10 +71,6 @@ nnoremap <leader>tr :TablineTabRename
 
 " Git mappings
 nnoremap <leader>gd :Gitsigns diffthis<CR>
-nnoremap <leader>gb :Git checkout -b<SPACE>
-nnoremap <leader>gc :Git checkout<SPACE>
-nnoremap <leader>gs :Git<CR>
-nnoremap <leader>gp :Git push<CR>
 
 " Terminal mappings
 :tnoremap <Esc> <C-\><C-n>
