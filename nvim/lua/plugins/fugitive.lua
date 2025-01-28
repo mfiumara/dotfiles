@@ -7,5 +7,6 @@ return {
 		vim.keymap.set("n", "<leader>gp", ":Git push<CR>")
 		vim.keymap.set("n", "<leader>gb", ":Git checkout -b<SPACE>")
 		vim.keymap.set("n", "<leader>gc", ":Git checkout<SPACE>")
+		vim.keymap.set("n", "<leader>gd", ":Gdiffsplit<SPACE>")
 	end,
 }
