@@ -187,6 +187,7 @@
       todoist-electron
       alacritty
       neovim
+      unzip
   ];
 
   # This seems like a dirty hack to get cargo to build some packages.
