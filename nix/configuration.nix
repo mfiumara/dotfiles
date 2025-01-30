@@ -187,7 +187,11 @@
       todoist-electron
       alacritty
       neovim
+	  # Deps required by neovim and plugins
+	  # TODO: Move to a nix flake
       unzip
+	  luajitPackages.luarocks
+	  clang-tools
   ];
 
   # This seems like a dirty hack to get cargo to build some packages.
