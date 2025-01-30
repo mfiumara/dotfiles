@@ -15,7 +15,10 @@ return {
 
 		map("n", "<leader>bb", "<cmd>Telescope buffers<CR>", opts)
 		map("n", "<leader>?", "<cmd>TodoTelescope<CR>", opts)
+		-- Respects .gitignore
 		map("n", "<C-p>", "<cmd>Telescope find_files<CR>", opts)
+		-- Find all files and ignore .gitignore
+		map("n", "<leader>fa", "<cmd>Telescope find_files no_ignore=true<CR>", opts)
 		map("n", "<leader>ff", "<cmd>Telescope live_grep<CR>", opts)
 		map("n", "<leader>fb", "<cmd>Telescope buffers<CR>", opts)
 		map("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", opts)
