@@ -65,4 +65,7 @@ return {
 	{
 		"hrsh7th/cmp-vsnip", -- Snippet completions for VSnip
 	},
+	{
+		"rafamadriz/friendly-snippets", -- A lot of good default snips
+	}
 }
