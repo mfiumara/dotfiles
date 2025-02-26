@@ -6,7 +6,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	if vim.v.shell_error ~= 0 then
 		vim.api.nvim_echo({
 			{ "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-			{ out, "WarningMsg" },
+			{ out,                            "WarningMsg" },
 			{ "\nPress any key to exit..." },
 		}, true, {})
 		vim.fn.getchar()
@@ -26,7 +26,7 @@ vim.opt.ttimeoutlen = 10 -- Timeout length for key mappings (ms)
 vim.opt.fillchars:append({ diff = "╱" })
 
 -- Enable filetype detection and related features
-vim.cmd("filetype on") -- Enable filetype detection
+vim.cmd("filetype on")        -- Enable filetype detection
 vim.cmd("filetype indent on") -- Enable filetype-specific indenting
 vim.cmd("filetype plugin on") -- Enable filetype-specific plugins
 
@@ -55,7 +55,7 @@ vim.opt.relativenumber = true
 vim.opt.ruler = true
 
 -- Set tab width in Neovim using Lua
-vim.opt.tabstop = 4 -- Number of spaces a tab counts for
+vim.opt.tabstop = 4    -- Number of spaces a tab counts for
 vim.opt.shiftwidth = 4 -- Number of spaces to use for each step of (auto)indent
 
 -- Optionally, set softtabstop for insert mode tab handling
@@ -136,7 +136,7 @@ require("lazy").setup({
 	},
 	-- Configure any other settings here. See the documentation for more details.
 	-- colorscheme that will be used when installing plugins.
-	install = { colorscheme = { "tokyonight" } },
+	install = { colorscheme = { "kanagawa-paper" } },
 	-- automatically check for plugin updates
 	checker = { enabled = true },
 })
