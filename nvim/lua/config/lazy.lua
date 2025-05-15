@@ -124,6 +124,8 @@ keymap("n", "<leader>th", ":tabprevious<CR>", opts)
 keymap("n", "<leader>tn", ":tabnew<CR>", opts)
 keymap("n", "<leader>td", ":tabclose<CR>", opts)
 keymap("n", "<leader>tt", ":tabedit %<CR>", opts)
+keymap("n", "<leader>to", ":tabonly<CR>", opts)
+keymap("n", "<leader>tc", ":tabclose<CR>", opts)
 
 -- Escape mapping for terminal
 keymap("t", "<Esc>", [[<C-\><C-n>]], { noremap = true, silent = true })
@@ -136,7 +138,7 @@ require("lazy").setup({
 	},
 	-- Configure any other settings here. See the documentation for more details.
 	-- colorscheme that will be used when installing plugins.
-	install = { colorscheme = { "kanagawa-paper" } },
+	install = { colorscheme = { "kanagawa" } },
 	-- automatically check for plugin updates
 	checker = { enabled = true },
 })

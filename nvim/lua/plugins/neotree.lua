@@ -13,7 +13,9 @@ return {
 				position = "float", -- Open as a floating window by default
 			},
 			filesystem = {
-				follow_current_file = true, -- Optional: Focus on the current file
+				follow_current_file = {
+					enabled = true, -- Optional: Focus on the current file
+				},
 			},
 		})
 

@@ -15,7 +15,7 @@ return {
 		priority = 1000,
 		lazy = true,
 		init = function()
-			vim.cmd("colorscheme kanagawa-paper")
+			vim.cmd("colorscheme kanagawa")
 		end,
 	}
 }
