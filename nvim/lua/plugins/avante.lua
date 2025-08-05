@@ -2,10 +2,7 @@ return {
 	"yetone/avante.nvim",
 	event = "VeryLazy",
 	version = false, -- Never set this value to "*"! Never!
-	opts = {
-		-- add any opts here
-		-- for example
-		provider = "openai",
+	provider = {
 		openai = {
 			endpoint = "https://api.openai.com/v1",
 			model = "gpt-4o",       -- your desired model (or use gpt-4o, etc.)
