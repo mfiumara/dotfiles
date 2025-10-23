@@ -1,4 +1,12 @@
 return
+-- {
+--     "mason-org/mason-lspconfig.nvim",
+--     opts = {},
+--     dependencies = {
+--         { "mason-org/mason.nvim", opts = {} },
+--         "neovim/nvim-lspconfig",
+--     },
+-- }
 {
 	-- Main LSP Configuration
 	"neovim/nvim-lspconfig",
@@ -6,12 +14,12 @@ return
 		-- Automatically install LSPs and related tools to stdpath for Neovim
 		-- Mason must be loaded before its dependents so we need to set it up here.
 		-- NOTE: `opts = {}` is the same as calling `require('mason').setup({})`
-		{ "williamboman/mason.nvim", opts = {} },
-		"williamboman/mason-lspconfig.nvim",
+		{ "mason-org/mason.nvim", opts = {} },
+		"mason-org/mason-lspconfig.nvim",
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
 
 		-- Useful status updates for LSP.
-		{ "j-hui/fidget.nvim",       opts = {} },
+		{ "j-hui/fidget.nvim", opts = {} },
 
 		-- Allows extra capabilities provided by nvim-cmp
 		"hrsh7th/cmp-nvim-lsp",
@@ -231,61 +239,61 @@ return
 		})
 		require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
-		-- require("mason-lspconfig").setup({
-		-- 	handlers = {
-		-- 		function(server_name)
-		-- 			local server = servers[server_name] or {}
-		-- 			-- This handles overriding only values explicitly passed
-		-- 			-- by the server configuration above. Useful when disabling
-		-- 			-- certain features of an LSP (for example, turning off formatting for ts_ls)
-		-- 			server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-		-- 			require("lspconfig")[server_name].setup(server)
-		-- 		end,
-		-- 	},
-		-- })
+		require("mason-lspconfig").setup({
+			handlers = {
+				function(server_name)
+					local server = servers[server_name] or {}
+					-- This handles overriding only values explicitly passed
+					-- by the server configuration above. Useful when disabling
+					-- certain features of an LSP (for example, turning off formatting for ts_ls)
+					server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
+					require("lspconfig")[server_name].setup(server)
+				end,
+			},
+		})
 	end,
 }
-
--- {
--- 	{
--- 		"jay-babu/mason-null-ls.nvim",
--- 		event = { "BufReadPre", "BufNewFile" },
--- 		dependencies = {
--- 			"williamboman/mason.nvim",
--- 			"nvimtools/none-ls.nvim",
--- 		},
--- 		init = function()
--- 			require("mason").setup()
--- 			require("mason-null-ls").setup({
--- 				ensure_installed = {
--- 					"clang-format",
--- 					"clangd",
--- 					"cortex-debug",
--- 					"lua-language-server",
--- 					"pyright",
--- 					"rust-analyzer",
--- 					"stylua",
--- 				},
--- 				automatic_installation = false,
--- 				handlers = {},
--- 			})
--- 			require("null-ls").setup({
--- 				sources = {
--- 					-- Anything not supported by mason.
--- 				},
--- 			})
--- 		end,
--- 	},
--- 	{
--- 		"nvimtools/none-ls.nvim",
--- 		init = function()
--- 			local null_ls = require("null-ls")
 --
--- 			null_ls.setup({
--- 				sources = {
--- 					-- Anything not supported by mason.
--- 				},
--- 			})
--- 		end,
--- 	},
--- }
+-- -- {
+-- -- 	{
+-- -- 		"jay-babu/mason-null-ls.nvim",
+-- -- 		event = { "BufReadPre", "BufNewFile" },
+-- -- 		dependencies = {
+-- -- 			"williamboman/mason.nvim",
+-- -- 			"nvimtools/none-ls.nvim",
+-- -- 		},
+-- -- 		init = function()
+-- -- 			require("mason").setup()
+-- -- 			require("mason-null-ls").setup({
+-- -- 				ensure_installed = {
+-- -- 					"clang-format",
+-- -- 					"clangd",
+-- -- 					"cortex-debug",
+-- -- 					"lua-language-server",
+-- -- 					"pyright",
+-- -- 					"rust-analyzer",
+-- -- 					"stylua",
+-- -- 				},
+-- -- 				automatic_installation = false,
+-- -- 				handlers = {},
+-- -- 			})
+-- -- 			require("null-ls").setup({
+-- -- 				sources = {
+-- -- 					-- Anything not supported by mason.
+-- -- 				},
+-- -- 			})
+-- -- 		end,
+-- -- 	},
+-- -- 	{
+-- -- 		"nvimtools/none-ls.nvim",
+-- -- 		init = function()
+-- -- 			local null_ls = require("null-ls")
+-- --
+-- -- 			null_ls.setup({
+-- -- 				sources = {
+-- -- 					-- Anything not supported by mason.
+-- -- 				},
+-- -- 			})
+-- -- 		end,
+-- -- 	},
+-- -- }
