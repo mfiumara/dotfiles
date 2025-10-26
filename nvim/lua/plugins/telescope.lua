@@ -9,8 +9,8 @@ return {
 				"nvim-telescope/telescope-fzf-native.nvim",
 				build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release",
 			},
-			{ 'nvim-tree/nvim-web-devicons',            enabled = true },
-			{ 'nvim-telescope/telescope-ui-select.nvim' },
+			{ "nvim-tree/nvim-web-devicons", enabled = true },
+			{ "nvim-telescope/telescope-ui-select.nvim" },
 		},
 		init = function()
 			require("telescope").setup({
@@ -24,6 +24,7 @@ return {
 
 			map("n", "<leader>bb", "<cmd>Telescope buffers<CR>", opts)
 			map("n", "<leader>?", "<cmd>TodoTelescope<CR>", opts)
+			map("n", "<leader>fp", "<cmd>Telescope diagnostics<CR>", opts)
 			-- Respects .gitignore
 			map("n", "<C-p>", "<cmd>Telescope find_files<CR>", opts)
 			-- Find all files and ignore .gitignore
