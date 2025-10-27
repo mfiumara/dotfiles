@@ -21,4 +21,32 @@ return {
 		{ "<leader>aa", "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept diff" },
 		{ "<leader>ad", "<cmd>ClaudeCodeDiffDeny<cr>", desc = "Deny diff" },
 	},
+	init = function()
+		require("claudecode").setup({
+			terminal = {
+				snacks_win_opts = {
+					position = "float",
+					width = 0.9,
+					height = 0.9,
+					border = "double",
+					backdrop = 80,
+					keys = {
+						-- Disable default conflicting keys
+						q = false,
+						term_normal = false,
+						-- Custom keys
+						claude_hide = {
+							"<Esc>",
+							function(self)
+								self:hide()
+							end,
+							mode = "t",
+							desc = "Hide",
+						},
+						claude_close = { "q", "close", mode = "n", desc = "Close" },
+					},
+				},
+			},
+		})
+	end,
 }
