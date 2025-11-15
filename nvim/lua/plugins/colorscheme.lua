@@ -14,8 +14,13 @@ return {
 		"thesimonho/kanagawa-paper.nvim",
 		priority = 1000,
 		lazy = true,
+	},
+	{
+		"catppuccin/nvim",
+		priority = 1000,
+		lazy = true,
 		init = function()
-			vim.cmd("colorscheme kanagawa")
+			vim.cmd("colorscheme catppuccin-mocha")
 		end,
-	}
+	},
 }
