@@ -10,7 +10,7 @@ return {
 	config = function()
 		require("neo-tree").setup({
 			window = {
-				position = "float", -- Open as a floating window by default
+				position = "right", -- Open as a floating window by default
 			},
 			filesystem = {
 				follow_current_file = {
