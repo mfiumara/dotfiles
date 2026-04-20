@@ -25,9 +25,7 @@ return {
 		require("claudecode").setup({
 			terminal = {
 				snacks_win_opts = {
-					position = "float",
-					width = 0.9,
-					height = 0.9,
+					position = "right",
 					border = "double",
 					backdrop = 80,
 					keys = {
