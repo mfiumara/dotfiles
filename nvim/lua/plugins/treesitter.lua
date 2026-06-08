@@ -1,13 +1,17 @@
 return {
-	-- Upgrade to nvim 0.10.0 before using treesitter
 	{
 		"nvim-treesitter/nvim-treesitter",
-		build = ":TSUpdate", -- Automatically update parsers after installation
-		init = function()
-			require("nvim-treesitter.configs").setup({
-				ensure_installed = { "c", "lua", "rust" }, -- Languages to install
-				highlight = { enable = true }, -- Enable syntax highlighting
-				indent = { enable = true }, -- Enable indentation
+		lazy = false,
+		build = ":TSInstall c lua rust",
+		config = function()
+			local languages = { "c", "lua", "rust" }
+
+			vim.api.nvim_create_autocmd("FileType", {
+				pattern = languages,
+				callback = function()
+					vim.treesitter.start()
+					vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+				end,
 			})
 		end,
 	},
