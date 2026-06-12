@@ -68,7 +68,20 @@ return {
 
 			require("telescope").setup({
 				defaults = {
+					border = true,
+					borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
 					layout_strategy = "vertical",
+					layout_config = {
+						vertical = {
+							height = 0.86,
+							preview_height = 0.52,
+							prompt_position = "top",
+							width = 0.88,
+						},
+					},
+					prompt_prefix = "> ",
+					selection_caret = "  ",
+					winblend = 8,
 				},
 			})
 			-- Define Key Mappings

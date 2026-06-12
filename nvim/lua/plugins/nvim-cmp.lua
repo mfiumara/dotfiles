@@ -14,6 +14,9 @@ return {
 		},
 		config = function()
 			local cmp = require("cmp")
+			local window = cmp.config.window.bordered({
+				winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None",
+			})
 
 			cmp.setup({
 				snippet = {
@@ -22,9 +25,8 @@ return {
 					end,
 				},
 				window = {
-					-- Uncomment these for a bordered completion menu:
-					completion = cmp.config.window.bordered(),
-					documentation = cmp.config.window.bordered(),
+					completion = window,
+					documentation = window,
 				},
 				mapping = cmp.mapping.preset.insert({
 					["<C-b>"] = cmp.mapping.scroll_docs(-4),

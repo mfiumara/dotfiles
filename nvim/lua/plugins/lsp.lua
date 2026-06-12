@@ -145,11 +145,20 @@ return
 			end,
 		})
 
+		local hover = vim.lsp.handlers.hover
+		local signature_help = vim.lsp.handlers.signature_help
+		vim.lsp.handlers["textDocument/hover"] = function(err, result, ctx, config)
+			return hover(err, result, ctx, vim.tbl_extend("force", config or {}, { border = "rounded" }))
+		end
+		vim.lsp.handlers["textDocument/signatureHelp"] = function(err, result, ctx, config)
+			return signature_help(err, result, ctx, vim.tbl_extend("force", config or {}, { border = "rounded" }))
+		end
+
 		-- Diagnostic Config
 		-- See :help vim.diagnostic.Opts
 		vim.diagnostic.config({
 			severity_sort = true,
-			float = { border = "rounded", source = "if_many" },
+			float = { border = "rounded", source = "if_many", prefix = " " },
 			underline = { severity = vim.diagnostic.severity.ERROR },
 			signs = {
 				text = {

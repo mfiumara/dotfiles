@@ -25,6 +25,12 @@ vim.opt.ttimeoutlen = 10 -- Timeout length for key mappings (ms)
 -- Customize fill characters for diff mode
 vim.opt.fillchars:append({ diff = "╱" })
 
+-- Floating window defaults
+pcall(function()
+	vim.opt.winborder = "rounded"
+end)
+vim.opt.pumblend = 8
+
 -- Enable filetype detection and related features
 vim.cmd("filetype on")        -- Enable filetype detection
 vim.cmd("filetype indent on") -- Enable filetype-specific indenting

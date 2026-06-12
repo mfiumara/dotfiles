@@ -9,8 +9,20 @@ return {
 	},
 	config = function()
 		require("neo-tree").setup({
+			popup_border_style = "rounded",
 			window = {
-				position = "right", -- Open as a floating window by default
+				position = "float",
+				popup = {
+					border = "rounded",
+					position = "50%",
+					size = {
+						height = "72%",
+						width = "42%",
+					},
+					title = function(state)
+						return " Neo-tree " .. state.name:gsub("^%l", string.upper) .. " "
+					end,
+				},
 			},
 			filesystem = {
 				follow_current_file = {
@@ -24,6 +36,6 @@ return {
 		local opts = { noremap = true, silent = true }
 
 		-- Translate NERDTree keybindings to Neo-tree
-		map("n", "<leader>nt", ":Neotree toggle reveal<CR>", opts) -- Toggles Neo-tree as a floating window
+		map("n", "<leader>nt", ":Neotree toggle float reveal<CR>", opts)
 	end,
 }
