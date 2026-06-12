@@ -13,6 +13,59 @@ return {
 			{ "nvim-telescope/telescope-ui-select.nvim" },
 		},
 		init = function()
+			-- Telescope 0.1.8 still calls a few legacy nvim-treesitter APIs.
+			local ok, parsers = pcall(require, "nvim-treesitter.parsers")
+			if ok then
+				local parser_compat = {
+					ft_to_lang = function(ft)
+						local language = vim.treesitter.language
+						if language.get_lang then
+							return language.get_lang(ft) or ft
+						end
+						if language.ft_to_lang then
+							return language.ft_to_lang(ft) or ft
+						end
+						return ft
+					end,
+					get_parser = function(bufnr, lang)
+						return vim.treesitter.get_parser(bufnr, lang)
+					end,
+				}
+				local parser_mt = getmetatable(parsers) or {}
+				local parser_index = parser_mt.__index
+
+				parser_mt.__index = function(tbl, key)
+					if parser_compat[key] then
+						return parser_compat[key]
+					end
+					if type(parser_index) == "function" then
+						return parser_index(tbl, key)
+					end
+					if type(parser_index) == "table" then
+						return parser_index[key]
+					end
+				end
+				setmetatable(parsers, parser_mt)
+			end
+
+			local ok_configs = pcall(require, "nvim-treesitter.configs")
+			if not ok_configs then
+				package.preload["nvim-treesitter.configs"] = function()
+					return {
+						is_enabled = function(module, lang, bufnr)
+							if module ~= "highlight" or not lang then
+								return false
+							end
+
+							return pcall(vim.treesitter.get_parser, bufnr, lang)
+						end,
+						get_module = function()
+							return { additional_vim_regex_highlighting = false }
+						end,
+					}
+				end
+			end
+
 			require("telescope").setup({
 				defaults = {
 					layout_strategy = "vertical",
